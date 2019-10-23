@@ -10,7 +10,7 @@ const users = require('./routes/users.js');
 const register = require('./routes/register.js');
 const login = require('./routes/login.js');
 
-const port = 1338;
+const port = 8888;
 
 app.use(cors());
 app.options('*', cors());
