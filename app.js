@@ -37,10 +37,10 @@ app.use((req, res, next) => {
 
 function checkToken(req, res, next) {
     const token = req.headers['x-access-token'];
-    jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+
+    jwt.verify(token, process.env.JWT_SECRET, function(err) {
         if (err) {
             // send error response
-            console.log('not a valid token');
             return res.status(500).json({
                 errors: {
                     status: 401,
@@ -51,13 +51,11 @@ function checkToken(req, res, next) {
             });
         }
         // Valid token send on the request
-        console.log('Valid token, super!');
         next();
     });
 }
 
 // Routes
-app.get('/users', users);
 app.get(
     '/users/:email',
     (req, res, next) => checkToken(req, res, next),

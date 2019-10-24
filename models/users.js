@@ -1,27 +1,9 @@
 const db = require('../db/database.js');
 
 const users = {
-    getUsers: function(req, res) {
-        let sql = `SELECT * FROM users`;
-
-        db.all(sql, function(err, rows) {
-            if (err) {
-                return res.status(500).json({
-                    error: {
-                        status: 500,
-                        path: '/present',
-                        title: 'Database error',
-                        message: err.message
-                    }
-                });
-            }
-            return res.status(200).json({
-                data: rows
-            });
-        });
-    },
     getBalance: function(res, req) {
         const email = req.email;
+
         if (!email) {
             return res.status(401).json({
                 errors: {
@@ -63,6 +45,7 @@ const users = {
     },
     getUser: function(res, req) {
         const email = req.email;
+
         if (!email) {
             return res.status(401).json({
                 errors: {
@@ -80,7 +63,7 @@ const users = {
                 return res.status(500).json({
                     errors: {
                         status: 500,
-                        source: '/balance',
+                        source: '/users',
                         title: 'Database error',
                         detail: err.message
                     }
@@ -91,7 +74,7 @@ const users = {
                 return res.status(401).json({
                     errors: {
                         status: 401,
-                        source: '/balance',
+                        source: '/users',
                         title: 'User not found',
                         detail: 'User with provided email not found.'
                     }
@@ -118,7 +101,7 @@ const users = {
         }
         let sql = `UPDATE users SET balance = ? WHERE email=?`;
 
-        db.run(sql, newBalance, email, (err, rows) => {
+        db.run(sql, newBalance, email, err => {
             if (err) {
                 return res.status(500).json({
                     errors: {
@@ -148,13 +131,14 @@ const users = {
             return res.status(401).json({
                 errors: {
                     status: 401,
-                    source: '/login',
+                    source: '/buystock',
                     title: 'Email or stocks missing',
                     detail: 'Email or stocks missing in request'
                 }
             });
         }
-        let sql = `UPDATE users SET balance = ?, stone = ?, gold = ?, silver = ?, bronze = ? WHERE email=?`;
+        let sql = `UPDATE users SET balance = ?, stone = ?, 
+        gold = ?, silver = ?, bronze = ? WHERE email=?`;
 
         db.run(
             sql,
@@ -164,12 +148,12 @@ const users = {
             userinfo.silver,
             userinfo.bronze,
             email,
-            (err, rows) => {
+            err => {
                 if (err) {
                     return res.status(500).json({
                         errors: {
                             status: 500,
-                            source: '/updatestock',
+                            source: '/buystock',
                             title: 'Database error',
                             detail: err.message
                         }

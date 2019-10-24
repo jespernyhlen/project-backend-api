@@ -10,6 +10,7 @@ const auth = {
     login: function(res, body) {
         const email = body.email;
         const password = body.password;
+
         if (!email || !password) {
             return res.status(401).json({
                 errors: {
@@ -21,6 +22,7 @@ const auth = {
             });
         }
         let sql = 'SELECT * FROM users WHERE email=?';
+
         db.get(sql, email, (err, rows) => {
             if (err) {
                 return res.status(500).json({
@@ -66,7 +68,7 @@ const auth = {
                         expiresIn: '1h'
                     });
 
-                    return res.json({
+                    return res.status(200).json({
                         data: {
                             type: 'success',
                             message: 'User logged in',
@@ -121,7 +123,8 @@ const auth = {
             }
 
             db.run(
-                'INSERT INTO users (firstname, lastname, email, date, password) VALUES (?, ?, ?, ?, ?)',
+                'INSERT INTO users (firstname, lastname, email, ' +
+                    'date, password) VALUES (?, ?, ?, ?, ?)',
                 firstname,
                 lastname,
                 email,

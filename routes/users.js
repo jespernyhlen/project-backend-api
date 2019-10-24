@@ -3,10 +3,6 @@ const router = express.Router();
 
 const users = require('../models/users.js');
 
-router.get('/users', (req, res) => {
-    users.getUsers(req, res);
-});
-
 router.get('/users/:email', (req, res) => {
     users.getUser(res, req.params);
 });
