@@ -2,6 +2,7 @@
  * Test users
  */
 'use strict';
+process.env.NODE_ENV = 'test';
 
 const { spy, stub } = require('sinon');
 const chai = require('chai');
