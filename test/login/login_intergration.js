@@ -1,4 +1,5 @@
 process.env.NODE_ENV = 'test';
+process.env.JWT_SECRET = 'NotSoSafe';
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');

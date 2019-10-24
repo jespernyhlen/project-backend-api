@@ -3,6 +3,7 @@
  */
 'use strict';
 process.env.NODE_ENV = 'test';
+process.env.JWT_SECRET = 'NotSoSafe';
 
 const { spy, stub } = require('sinon');
 const chai = require('chai');
